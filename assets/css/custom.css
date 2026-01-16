@@ -79,3 +79,37 @@
   padding: 0.8em 2.2em;
   font-size: 1rem;
 }
+/* ---------- Compact Footer Styling ---------- */
+
+#footer {
+  padding: 1.8em 0 1em 0;   /* reduce overall footer height */
+}
+
+#footer hr {
+  margin: 1em 0;
+}
+
+#footer .contact {
+  margin-bottom: 1em;
+}
+
+#footer .contact h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.6em;
+}
+
+#footer .contact p {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-bottom: 0.4em;
+}
+
+#footer .copyright {
+  margin-top: 0.8em;
+  padding-top: 0.6em;
+  font-size: 0.8rem;
+}
+
+#footer .copyright ul.menu li {
+  padding: 0;
+}
