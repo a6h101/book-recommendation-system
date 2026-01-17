@@ -113,3 +113,45 @@
 #footer .copyright ul.menu li {
   padding: 0;
 }
+
+.search-container {
+	text-align: center;
+	max-width: 600px;
+	margin: 0 auto;
+}
+
+.search-container input {
+	width: 100%;
+	padding: 12px;
+	font-size: 1rem;
+	margin-bottom: 15px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+}
+
+.genre-buttons {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	justify-content: center;
+	margin-bottom: 15px;
+}
+
+.genre-btn {
+	padding: 8px 14px;
+	border-radius: 20px;
+	border: 1px solid #888;
+	cursor: pointer;
+	font-size: 0.9rem;
+	transition: all 0.2s ease;
+}
+
+.genre-btn:hover {
+	background: #be0b0b;
+}
+
+.genre-btn.active {
+	background: #be0b0b;
+	color: #fff;
+	border-color: #be0b0b;
+}

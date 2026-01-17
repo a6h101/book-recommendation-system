@@ -54,12 +54,20 @@
 							<div class="search-box">
 							<input
 								type="text"
-								placeholder="Search by book name or genre..."
+								placeholder="Search a book title"
 								id="searchInput"
 							/>
 							<a href="#" onclick="handleSearch()">
 								<i class="fas fa-search"></i>
 							</a>
+							</div>
+
+							<div class="genre-buttons"> 
+								<button class="genre-btn" data-genre="Fantasy">Fantasy</button> 
+								<button class="genre-btn" data-genre="Mystery">Mystery</button> 
+								<button class="genre-btn" data-genre="Romance">Romance</button> 
+								<button class="genre-btn" data-genre="Science Fiction">Sci-Fi</button> 
+								<button class="genre-btn" data-genre="Non Fiction">Non-Fiction</button>
 							</div>
 
 							<!-- Continue Button -->
@@ -75,8 +83,16 @@
 			<!-- Carousel -->
 				<section class="carousel" id="book-carousel">
 					<div class="reel">
-
-						<article>
+						<article class="card" id="card-template" style="display:none;">
+							<a href="#" class="image featured">
+								<img src="images/pic05.jpg" alt="" />
+							</a>
+							<header>
+								<h3><a href="#">Book Title</a></h3>
+							</header>
+							<p>Book description</p>
+						</article>
+						<article class="card">
 							<a href="#" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
 							<header>
 								<h3><a href="#">Pulvinar sagittis congue</a></h3>
@@ -84,7 +100,7 @@
 							<p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
 						</article>
 
-						<article>
+						<article class="card">
 							<a href="#" class="image featured"><img src="images/pic02.jpg" alt="" /></a>
 							<header>
 								<h3><a href="#">Fermentum sagittis proin</a></h3>
@@ -92,7 +108,7 @@
 							<p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
 						</article>
 
-						<article>
+						<article class="card">
 							<a href="#" class="image featured"><img src="images/pic03.jpg" alt="" /></a>
 							<header>
 								<h3><a href="#">Sed quis rhoncus placerat</a></h3>
@@ -100,7 +116,7 @@
 							<p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
 						</article>
 
-						<article>
+						<article class="card">
 							<a href="#" class="image featured"><img src="images/pic04.jpg" alt="" /></a>
 							<header>
 								<h3><a href="#">Ultrices urna sit lobortis</a></h3>
@@ -108,7 +124,7 @@
 							<p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
 						</article>
 
-						<article>
+						<article class="card">
 							<a href="#" class="image featured"><img src="images/pic05.jpg" alt="" /></a>
 							<header>
 								<h3><a href="#">Varius magnis sollicitudin</a></h3>
@@ -116,7 +132,7 @@
 							<p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
 						</article>
 
-						<article>
+						<article class="card">
 							<a href="#" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
 							<header>
 								<h3><a href="#">Pulvinar sagittis congue</a></h3>
@@ -124,7 +140,7 @@
 							<p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
 						</article>
 
-						<article>
+						<article class="card">
 							<a href="#" class="image featured"><img src="images/pic02.jpg" alt="" /></a>
 							<header>
 								<h3><a href="#">Fermentum sagittis proin</a></h3>
@@ -132,7 +148,7 @@
 							<p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
 						</article>
 
-						<article>
+						<article class="card">
 							<a href="#" class="image featured"><img src="images/pic03.jpg" alt="" /></a>
 							<header>
 								<h3><a href="#">Sed quis rhoncus placerat</a></h3>
@@ -140,7 +156,7 @@
 							<p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
 						</article>
 
-						<article>
+						<article class="card">
 							<a href="#" class="image featured"><img src="images/pic04.jpg" alt="" /></a>
 							<header>
 								<h3><a href="#">Ultrices urna sit lobortis</a></h3>
@@ -148,7 +164,7 @@
 							<p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
 						</article>
 
-						<article>
+						<article class="card">
 							<a href="#" class="image featured"><img src="images/pic05.jpg" alt="" /></a>
 							<header>
 								<h3><a href="#">Varius magnis sollicitudin</a></h3>
@@ -262,6 +278,66 @@
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/search.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script>
+			let selectedGenres = [];
 
+			document.querySelectorAll(".genre-btn").forEach(btn => {
+				btn.addEventListener("click", () => {
+					const genre = btn.dataset.genre;
+
+					if (selectedGenres.includes(genre)) {
+						selectedGenres = selectedGenres.filter(g => g !== genre);
+						btn.classList.remove("active");
+					} else {
+						selectedGenres.push(genre);
+						btn.classList.add("active");
+					}
+				});
+			});
+
+			function getRecommendations() {
+				const title = document.getElementById("bookInput").value;
+				const container = document.getElementById("results");
+				const template = document.getElementById("card-template");
+
+				let url = "http://127.0.0.1:8000/recommend?";
+				if (title) url += "title=" + encodeURIComponent(title);
+				if (selectedGenres.length > 0) {
+					url += "&genres=" + encodeURIComponent(selectedGenres.join(","));
+				}
+
+				fetch(url)
+					.then(res => res.json())
+					.then(data => {
+						container.querySelectorAll(".card:not(#card-template)")
+							.forEach(card => card.remove());
+
+						if (!data.recommendations || data.recommendations.length === 0) {
+							alert("No recommendations found");
+							return;
+						}
+
+						data.recommendations.forEach(book => {
+							const card = template.cloneNode(true);
+							card.style.display = "block";
+							card.removeAttribute("id");
+
+							card.querySelector("h3 a").textContent = book.title;
+							card.querySelector("p").textContent =
+								book.description || "No description available.";
+
+							if (book.image) {
+								card.querySelector("img").src = book.image;
+							}
+
+							container.appendChild(card);
+						});
+					})
+					.catch(err => {
+						console.error(err);
+						alert("Failed to fetch recommendations");
+					});
+			}
+			</script>
 	</body>
 </html>
