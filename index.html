@@ -57,7 +57,7 @@
 								placeholder="Search a book title"
 								id="searchInput"
 							/>
-							<a href="#" onclick="handleSearch()">
+							<a href="#" onclick="getRecommendations()">
 								<i class="fas fa-search"></i>
 							</a>
 							</div>
@@ -82,7 +82,7 @@
 
 			<!-- Carousel -->
 				<section class="carousel" id="book-carousel">
-					<div class="reel">
+					<div class="reel" id="results">
 						<article class="card" id="card-template" style="display:none;">
 							<a href="#" class="image featured">
 								<img src="images/pic05.jpg" alt="" />
@@ -92,86 +92,6 @@
 							</header>
 							<p>Book description</p>
 						</article>
-						<article class="card">
-							<a href="#" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
-							<header>
-								<h3><a href="#">Pulvinar sagittis congue</a></h3>
-							</header>
-							<p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-						</article>
-
-						<article class="card">
-							<a href="#" class="image featured"><img src="images/pic02.jpg" alt="" /></a>
-							<header>
-								<h3><a href="#">Fermentum sagittis proin</a></h3>
-							</header>
-							<p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-						</article>
-
-						<article class="card">
-							<a href="#" class="image featured"><img src="images/pic03.jpg" alt="" /></a>
-							<header>
-								<h3><a href="#">Sed quis rhoncus placerat</a></h3>
-							</header>
-							<p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-						</article>
-
-						<article class="card">
-							<a href="#" class="image featured"><img src="images/pic04.jpg" alt="" /></a>
-							<header>
-								<h3><a href="#">Ultrices urna sit lobortis</a></h3>
-							</header>
-							<p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-						</article>
-
-						<article class="card">
-							<a href="#" class="image featured"><img src="images/pic05.jpg" alt="" /></a>
-							<header>
-								<h3><a href="#">Varius magnis sollicitudin</a></h3>
-							</header>
-							<p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-						</article>
-
-						<article class="card">
-							<a href="#" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
-							<header>
-								<h3><a href="#">Pulvinar sagittis congue</a></h3>
-							</header>
-							<p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-						</article>
-
-						<article class="card">
-							<a href="#" class="image featured"><img src="images/pic02.jpg" alt="" /></a>
-							<header>
-								<h3><a href="#">Fermentum sagittis proin</a></h3>
-							</header>
-							<p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-						</article>
-
-						<article class="card">
-							<a href="#" class="image featured"><img src="images/pic03.jpg" alt="" /></a>
-							<header>
-								<h3><a href="#">Sed quis rhoncus placerat</a></h3>
-							</header>
-							<p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-						</article>
-
-						<article class="card">
-							<a href="#" class="image featured"><img src="images/pic04.jpg" alt="" /></a>
-							<header>
-								<h3><a href="#">Ultrices urna sit lobortis</a></h3>
-							</header>
-							<p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-						</article>
-
-						<article class="card">
-							<a href="#" class="image featured"><img src="images/pic05.jpg" alt="" /></a>
-							<header>
-								<h3><a href="#">Varius magnis sollicitudin</a></h3>
-							</header>
-							<p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-						</article>
-
 					</div>
 				</section>
 
@@ -278,66 +198,5 @@
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/search.js"></script>
 			<script src="assets/js/main.js"></script>
-			<script>
-			let selectedGenres = [];
-
-			document.querySelectorAll(".genre-btn").forEach(btn => {
-				btn.addEventListener("click", () => {
-					const genre = btn.dataset.genre;
-
-					if (selectedGenres.includes(genre)) {
-						selectedGenres = selectedGenres.filter(g => g !== genre);
-						btn.classList.remove("active");
-					} else {
-						selectedGenres.push(genre);
-						btn.classList.add("active");
-					}
-				});
-			});
-
-			function getRecommendations() {
-				const title = document.getElementById("bookInput").value;
-				const container = document.getElementById("results");
-				const template = document.getElementById("card-template");
-
-				let url = "http://127.0.0.1:8000/recommend?";
-				if (title) url += "title=" + encodeURIComponent(title);
-				if (selectedGenres.length > 0) {
-					url += "&genres=" + encodeURIComponent(selectedGenres.join(","));
-				}
-
-				fetch(url)
-					.then(res => res.json())
-					.then(data => {
-						container.querySelectorAll(".card:not(#card-template)")
-							.forEach(card => card.remove());
-
-						if (!data.recommendations || data.recommendations.length === 0) {
-							alert("No recommendations found");
-							return;
-						}
-
-						data.recommendations.forEach(book => {
-							const card = template.cloneNode(true);
-							card.style.display = "block";
-							card.removeAttribute("id");
-
-							card.querySelector("h3 a").textContent = book.title;
-							card.querySelector("p").textContent =
-								book.description || "No description available.";
-
-							if (book.image) {
-								card.querySelector("img").src = book.image;
-							}
-
-							container.appendChild(card);
-						});
-					})
-					.catch(err => {
-						console.error(err);
-						alert("Failed to fetch recommendations");
-					});
-			}
-			</script>
 	</body>
 </html>
