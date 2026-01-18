@@ -1,63 +1,63 @@
-let selectedGenres = [];
+async function handleSearch() {
+  console.log("Search clicked");
 
-document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".genre-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-            const genre = btn.dataset.genre;
+  const query = document.getElementById("searchInput").value.trim();
 
-            if (selectedGenres.includes(genre)) {
-                selectedGenres = selectedGenres.filter(g => g !== genre);
-                btn.classList.remove("active");
-            } else {
-                selectedGenres.push(genre);
-                btn.classList.add("active");
-            }
-        });
-    });
+  if (!query) {
+    alert("Please enter a book name or genre");
+    return;
+  }
 
-});
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:8000/recommend?title=${encodeURIComponent(query)}`
+    );
 
-function getRecommendations() {
-    const title = document.getElementById("searchInput").value;
-    const container = document.getElementById("results");
-    const template = document.getElementById("card-template");
-
-    let url = "http://127.0.0.1:8000/recommend?";
-    if (title) url += "title=" + encodeURIComponent(title);
-    if (selectedGenres.length > 0) {
-        url += "&genres=" + encodeURIComponent(selectedGenres.join(","));
+    if (!response.ok) {
+      throw new Error("API error");
     }
 
-    fetch(url)
-        .then(res => res.json())
-        .then(data => {
+    const data = await response.json();
+    renderBooks(data);
 
-            container.querySelectorAll(".card:not(#card-template)")
-                .forEach(card => card.remove());
+    // auto-scroll to carousel
+    document
+      .getElementById("book-carousel")
+      .scrollIntoView({ behavior: "smooth" });
 
-            if (!data.recommendations || data.recommendations.length === 0) {
-                alert("No recommendations found");
-                return;
-            }
+  } catch (error) {
+    console.error(error);
+    alert("Failed to fetch recommendations");
+  }
+}
 
-            data.recommendations.forEach(book => {
-                const card = template.cloneNode(true);
-                card.style.display = "block";
-                card.removeAttribute("id");
+function renderBooks(books) {
+  const reel = document.getElementById("carouselReel");
+  reel.innerHTML = ""; // clear old results
 
-                card.querySelector("h3 a").textContent = book.title;
-                card.querySelector("p").textContent =
-                    book.description || "No description available.";
+  if (!books || books.length === 0) {
+    reel.innerHTML = "<p>No recommendations found.</p>";
+    return;
+  }
 
-                if (book.image) {
-                    card.querySelector("img").src = book.image;
-                }
+  books.forEach(book => {
+    const article = document.createElement("article");
 
-                container.appendChild(card);
-            });
-        })
-        .catch(err => {
-            console.error(err);
-            alert("Failed to fetch recommendations");
-        });
+    const imageSrc = book.image_url || "images/default-book.jpg";
+
+    article.innerHTML = `
+      <a href="#" class="image featured">
+        <img src="${imageSrc}" alt="${book.title}" />
+      </a>
+      <header>
+        <h3>${book.title}</h3>
+      </header>
+      <p>
+        <strong>Author:</strong> ${book.author}<br>
+        <strong>Rating:</strong> ${book.rating ?? "N/A"}
+      </p>
+    `;
+
+    reel.appendChild(article);
+  });
 }

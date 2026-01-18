@@ -54,64 +54,40 @@
 							<div class="search-box">
 							<input
 								type="text"
-								placeholder="Search a book title"
+								placeholder="Search by book name or genre..."
 								id="searchInput"
 							/>
-							<a href="#" onclick="getRecommendations()">
+							<a href="#" onclick="handleSearch()">
 								<i class="fas fa-search"></i>
 							</a>
 							</div>
 
-							<div class="genre-buttons"> 
-								<button class="genre-btn" data-genre="Fantasy">Fantasy</button> 
-								<button class="genre-btn" data-genre="Mystery">Mystery</button> 
-								<button class="genre-btn" data-genre="Romance">Romance</button> 
-								<button class="genre-btn" data-genre="Science Fiction">Sci-Fi</button> 
-								<button class="genre-btn" data-genre="Non Fiction">Non-Fiction</button>
-							</div>
+							<button type="button" onclick="handleSearch()" class="search-btn">
+  							<i class="fas fa-search"></i>
+							</button>
+
 
 							<!-- Continue Button -->
-							<div class="banner-action">
-							<a href="#book-carousel" class="button scrolly">
+							<!-- <div class="banner-action">
+							<a href="#book-carousel" class="button">
 								Continue
 							</a>
-							</div>
+							</div> -->
 
 						</header>
 					</section>
 
 			<!-- Carousel -->
 				<section class="carousel" id="book-carousel">
-					<div class="reel" id="results">
-						<article class="card" id="card-template" style="display:none;">
-							<a href="#" class="image featured">
-								<img src="images/pic05.jpg" alt="" />
-							</a>
-							<header>
-								<h3><a href="#">Book Title</a></h3>
-							</header>
-							<p>Book description</p>
-						</article>
+					<div class="reel" id="carouselReel">
+
+						
+
 					</div>
 				</section>
 
 			<!-- Main -->
-				<div class="wrapper style2">
-
-					<article id="main" class="container special">
-						<a href="#" class="image featured"><img src="images/pic06.jpg" alt="" /></a>
-						<header>
-							<h2><a href="#">How BookVerse Works</a></h2>
-							<p>
-								Enter a book title or genre and get personalized recommendations.
-							</p>
-						</header>
-						<footer>
-							<a href="#" class="button">Continue Reading</a>
-						</footer>
-					</article>
-
-				</div>
+				
 
 			<section id="features" class="container special">
   <header>
@@ -198,5 +174,6 @@
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/search.js"></script>
 			<script src="assets/js/main.js"></script>
+
 	</body>
 </html>

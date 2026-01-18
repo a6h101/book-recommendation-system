@@ -114,44 +114,82 @@
   padding: 0;
 }
 
-.search-container {
-	text-align: center;
-	max-width: 600px;
-	margin: 0 auto;
+/* ===== FEATURES SECTION ===== */
+
+#features {
+  text-align: center;
+  padding: 3em 0;
 }
 
-.search-container input {
-	width: 100%;
-	padding: 12px;
-	font-size: 1rem;
-	margin-bottom: 15px;
-	border-radius: 6px;
-	border: 1px solid #ccc;
+#features header {
+  margin-bottom: 2em;
 }
 
-.genre-buttons {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 10px;
-	justify-content: center;
-	margin-bottom: 15px;
+#features .feature-card {
+  text-align: center;
+  padding: 2em 1.5em;
 }
 
-.genre-btn {
-	padding: 8px 14px;
-	border-radius: 20px;
-	border: 1px solid #888;
-	cursor: pointer;
-	font-size: 0.9rem;
-	transition: all 0.2s ease;
+#features .feature-card .icon {
+  font-size: 3rem;
+  color: #e97b6c;
+  display: block;
+  margin-bottom: 0.8em;
 }
 
-.genre-btn:hover {
-	background: #be0b0b;
+#features h3 {
+  margin-bottom: 0.5em;
 }
 
-.genre-btn.active {
-	background: #be0b0b;
-	color: #fff;
-	border-color: #be0b0b;
+#features p {
+  font-size: 0.9rem;
+  max-width: 260px;
+  margin: 0 auto 1em auto;
+}
+
+#features .button {
+  margin-top: 0.5em;
+}
+.feature-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+/* FORCE center alignment for feature cards (HTML5 UP override) */
+#features .feature-card {
+  text-align: center !important;
+}
+
+/* Fix icon alignment */
+#features .feature-card .icon {
+  display: inline-block !important;
+  font-size: 3rem;
+  margin-bottom: 0.7em;
+}
+
+/* Fix paragraph alignment + width */
+#features .feature-card p {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  max-width: 260px;
+}
+
+/* Fix heading alignment */
+#features .feature-card h3 {
+  text-align: center !important;
+}
+
+/* for button */
+.search-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.search-btn i {
+  font-size: 1.2rem;
+  color: #444;
 }
