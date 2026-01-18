@@ -1,38 +1,32 @@
-from sklearn.feature_extraction.text import TfidfVectorizer
+import os
+import pickle
+import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
-class Recommender:
-    def __init__(self, df):
-        self.df = df
-        self.df["combined"] = (
-            df["title"] + " " +
-            df["authors"] + " " +
-            df["genres"] + " " +
-            df["description"]
-        )
+# loading artifacts
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+ARTIFACTS_DIR = os.path.join(BASE_DIR, "ml", "artifacts")
 
-        self.vectorizer = TfidfVectorizer(stop_words="english")
-        self.tfidf_matrix = self.vectorizer.fit_transform(self.df["combined"])
-        self.similarity = cosine_similarity(self.tfidf_matrix)
+with open(os.path.join(ARTIFACTS_DIR, "books_df.pkl"), "rb") as f:
+    book_df = pickle.load(f)
 
-    def recommend_by_title(self, title, top_n=5):
-        if title not in self.df["title"].values:
-            return []
+with open(os.path.join(ARTIFACTS_DIR, "tfidf_matrix.pkl"), "rb") as f:
+    tfidf_matrix = pickle.load(f)
 
-        idx = self.df[self.df["title"] == title].index[0]
-        scores = list(enumerate(self.similarity[idx]))
-        scores = sorted(scores, key=lambda x: x[1], reverse=True)
+cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
 
-        return self.df.iloc[[i[0] for i in scores[1:top_n+1]]][
-            ["title", "authors", "genres"]
-        ].to_dict(orient="records")
+indices = pd.Series(book_df.index, index=book_df["Book"]).drop_duplicates()
 
-    def recommend_by_genres(self, genres, top_n=5):
-        query = " ".join(genres)
-        query_vec = self.vectorizer.transform([query])
-        scores = cosine_similarity(query_vec, self.tfidf_matrix).flatten()
 
-        top_indices = scores.argsort()[::-1][:top_n]
-        return self.df.iloc[top_indices][
-            ["title", "authors", "genres"]
-        ].to_dict(orient="records")
+def recommend_books(title: str, top_n: int = 5):
+    """
+    Returns list of book titles similar to input title
+    """
+    if title not in indices:
+        return []
+
+    idx = indices[title]
+    sim_scores = list(enumerate(cosine_sim[idx]))
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)[1: top_n + 1]
+
+    return [book_df.iloc[i[0]]["Book"] for i in sim_scores]

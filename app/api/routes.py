@@ -1,16 +1,19 @@
-from fastapi import APIRouter, Query
-from app.core.startup import recommender
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
 
-router = APIRouter(prefix="recommend", tags=["recommendations"])
+from app.services.recommender import recommend_books
+from app.db.session import get_db
+from app.db.models import Book
 
-@router.get("/title")
-def recommend_by_title(book : str):
-    results = recommender.recommend_by_title(book)
-    if not results:
-        return {"message": "Book not found!"}
-    return {"recommendations": results}
+router = APIRouter()
 
-@router.get("/genres")
-def recommend_by_genres(genres: list[str] = Query(...)):
-    results = recommender.recommend_by_genres(genres)
-    return {"recommnedation": results}
+
+@router.get("/recommend")
+def recommend(title: str, db: Session = Depends(get_db)):
+    titles = recommend_books(title)
+
+    if not titles:
+        return {"message": "Book not found"}
+
+    books = db.query(Book).filter(Book.title.in_(titles)).all()
+    return books
