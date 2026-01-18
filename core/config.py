@@ -1,1 +1,0 @@
-DATABASE_URL = "mysql+mysqlconnector://user:password@localhost:3306/books_db"
