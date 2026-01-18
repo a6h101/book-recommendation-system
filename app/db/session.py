@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-DATABASE_URL = "sqlite:///./books.db"
+DATABASE_URL = "sqlite:///C:/Users/Abhi/Documents/GitHub/book-recommendation-system/app/db/books.db"
 
 engine = create_engine(
     DATABASE_URL, connect_args={"check_same_thread": False}

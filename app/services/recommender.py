@@ -3,7 +3,7 @@ import pickle
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
-# loading artifacts
+# ---------- Load artifacts ----------
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 ARTIFACTS_DIR = os.path.join(BASE_DIR, "ml", "artifacts")
 
@@ -15,18 +15,30 @@ with open(os.path.join(ARTIFACTS_DIR, "tfidf_matrix.pkl"), "rb") as f:
 
 cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
 
-indices = pd.Series(book_df.index, index=book_df["Book"]).drop_duplicates()
+# ---------- Normalization ----------
+def normalize(text: str):
+    return text.lower().strip()
+
+book_df["book_norm"] = book_df["Book"].str.lower().str.strip()
 
 
+# ---------- Recommender ----------
 def recommend_books(title: str, top_n: int = 5):
-    """
-    Returns list of book titles similar to input title
-    """
-    if title not in indices:
-        return []
+    title_norm = normalize(title)
 
-    idx = indices[title]
-    sim_scores = list(enumerate(cosine_sim[idx]))
-    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)[1: top_n + 1]
+    # ✅ Exact match
+    exact_match = book_df[book_df["book_norm"] == title_norm]
 
-    return [book_df.iloc[i[0]]["Book"] for i in sim_scores]
+    # ✅ Partial match fallback
+    if exact_match.empty:
+        matches = book_df[book_df["book_norm"].str.contains(title_norm, na=False)]
+        if matches.empty:
+            return []
+        idx = matches.index[0]
+    else:
+        idx = exact_match.index[0]
+
+    sim_scores = cosine_sim[idx]
+    top_idx = sim_scores.argsort()[-top_n-1:-1][::-1]
+
+    return book_df.loc[top_idx, "Book"].tolist()

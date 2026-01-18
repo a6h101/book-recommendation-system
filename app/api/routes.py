@@ -13,7 +13,8 @@ def recommend(title: str, db: Session = Depends(get_db)):
     titles = recommend_books(title)
 
     if not titles:
-        return {"message": "Book not found"}
+        return {"message": "No recommendations found"}
 
     books = db.query(Book).filter(Book.title.in_(titles)).all()
+
     return books
