@@ -20,7 +20,6 @@ async function handleSearch() {
     const data = await response.json();
     renderBooks(data);
 
-    // auto-scroll to carousel
     document
       .getElementById("book-carousel")
       .scrollIntoView({ behavior: "smooth" });
@@ -33,7 +32,7 @@ async function handleSearch() {
 
 function renderBooks(books) {
   const reel = document.getElementById("carouselReel");
-  reel.innerHTML = ""; // clear old results
+  reel.innerHTML = "";
 
   if (!books || books.length === 0) {
     reel.innerHTML = "<p>No recommendations found.</p>";

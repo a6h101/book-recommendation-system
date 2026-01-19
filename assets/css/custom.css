@@ -18,7 +18,6 @@
   margin-bottom: 1rem;
 }
 
-/* Banner Content Centering */
 #banner {
   text-align: center;
   padding: 6em 1em;
@@ -36,7 +35,6 @@
   margin-bottom: 1.5rem;
 }
 
-/* Search Box */
 .search-box {
   height: 40px;
   display: flex;
@@ -79,10 +77,9 @@
   padding: 0.8em 2.2em;
   font-size: 1rem;
 }
-/* ---------- Compact Footer Styling ---------- */
 
 #footer {
-  padding: 1.8em 0 1em 0;   /* reduce overall footer height */
+  padding: 1.8em 0 1em 0;
 }
 
 #footer hr {
@@ -113,8 +110,6 @@
 #footer .copyright ul.menu li {
   padding: 0;
 }
-
-/* ===== FEATURES SECTION ===== */
 
 #features {
   text-align: center;
@@ -159,36 +154,32 @@
   box-shadow: 0 15px 30px rgba(0,0,0,0.15);
 }
 
-/* FORCE center alignment for feature cards (HTML5 UP override) */
 #features .feature-card {
   text-align: center !important;
 }
 
-/* Fix icon alignment */
 #features .feature-card .icon {
   display: inline-block !important;
   font-size: 3rem;
   margin-bottom: 0.7em;
 }
 
-/* Fix paragraph alignment + width */
 #features .feature-card p {
   margin-left: auto !important;
   margin-right: auto !important;
   max-width: 260px;
 }
 
-/* Fix heading alignment */
 #features .feature-card h3 {
   text-align: center !important;
 }
 
-/* for button */
 .search-btn {
   background: none;
   border: none;
   cursor: pointer;
 }
+
 .search-btn i {
   font-size: 1.2rem;
   color: #444;
