@@ -3,7 +3,6 @@ import pickle
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
-# ---------- Load artifacts ----------
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 ARTIFACTS_DIR = os.path.join(BASE_DIR, "ml", "artifacts")
 
@@ -15,21 +14,16 @@ with open(os.path.join(ARTIFACTS_DIR, "tfidf_matrix.pkl"), "rb") as f:
 
 cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
 
-# ---------- Normalization ----------
 def normalize(text: str):
     return text.lower().strip()
 
 book_df["book_norm"] = book_df["Book"].str.lower().str.strip()
 
-
-# ---------- Recommender ----------
 def recommend_books(title: str, top_n: int = 5):
     title_norm = normalize(title)
 
-    # ✅ Exact match
     exact_match = book_df[book_df["book_norm"] == title_norm]
 
-    # ✅ Partial match fallback
     if exact_match.empty:
         matches = book_df[book_df["book_norm"].str.contains(title_norm, na=False)]
         if matches.empty:

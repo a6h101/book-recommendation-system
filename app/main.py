@@ -5,10 +5,8 @@ from app.core.startup import load_resources
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # This runs when the server starts
     load_resources()
     yield
-    # This runs when the server shuts down
     print("Shutting down...")
 
 app = FastAPI(title="Book Recommendation System", lifespan=lifespan)

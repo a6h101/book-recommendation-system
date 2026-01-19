@@ -5,10 +5,8 @@ from app.db.session import engine, SessionLocal
 from app.db.models import Book
 from app.db.session import Base
 
-# path fix
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 CSV_PATH = os.path.join(BASE_DIR, "ml", "cleaned_data", "books_cleaned.csv")
-
 
 def init_db():
     print("Creating tables...")
@@ -36,7 +34,6 @@ def init_db():
     db.close()
 
     print("Database initialized successfully!")
-
 
 if __name__ == "__main__":
     init_db()

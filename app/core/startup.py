@@ -4,11 +4,9 @@ import pandas as pd
 import pickle
 import os
 
-# Globals (shared across app)
 books_df = None
 tfidf_matrix = None
 tfidf_vectorizer = None
-
 
 def load_resources():
     global books_df, tfidf_matrix, tfidf_vectorizer
@@ -27,7 +25,6 @@ def load_resources():
         "avg_rating": b.avg_rating
     } for b in books])
 
-    # session artifacts loadup a6h1
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
     ARTIFACTS_DIR = os.path.join(BASE_DIR, "ml", "artifacts")
 
