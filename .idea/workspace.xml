@@ -7,7 +7,6 @@
     <list default="true" id="3a4a0c91-4f17-4505-b62a-8a6468245864" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/css/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/search.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/search.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +22,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python.__init__db.executor": "Run",
     "git-widget-placeholder": "frontend",
     "node.js.selected.package.tslint": "(autodetect)"
   }
