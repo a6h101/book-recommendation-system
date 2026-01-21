@@ -7,7 +7,6 @@ from app.db.models import Book
 
 router = APIRouter()
 
-
 @router.get("/recommend")
 def recommend(title: str, db: Session = Depends(get_db)):
     titles = recommend_books(title)

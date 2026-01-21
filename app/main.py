@@ -1,9 +1,8 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
-from app.api.routes import router
+from app.api.routes import router as api_router
 from app.core.startup import load_resources
 from fastapi.middleware.cors import CORSMiddleware
-
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -28,4 +27,4 @@ app.add_middleware(
 def root():
     return {"message": "Book Recommendation API is running"}
 
-app.include_router(router)
+app.include_router(api_router)

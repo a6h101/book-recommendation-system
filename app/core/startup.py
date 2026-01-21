@@ -4,6 +4,7 @@ import pandas as pd
 import pickle
 import os
 
+#Globals
 books_df = None
 tfidf_matrix = None
 tfidf_vectorizer = None
