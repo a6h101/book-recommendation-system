@@ -9,6 +9,8 @@ ARTIFACTS_DIR = os.path.join(BASE_DIR, "ml", "artifacts")
 with open(os.path.join(ARTIFACTS_DIR, "books_df.pkl"), "rb") as f:
     book_df = pickle.load(f)
 
+    print("BOOK_DF COLUMNS:", book_df.columns.tolist()) #debug line for columns
+
 with open(os.path.join(ARTIFACTS_DIR, "tfidf_matrix.pkl"), "rb") as f:
     tfidf_matrix = pickle.load(f)
 
@@ -35,12 +37,11 @@ def recommend_books(title: str, top_n: int = 5):
     sim_scores = cosine_sim[idx]
     top_idx = sim_scores.argsort()[-top_n-1:-1][::-1]
 
-    return book_df.loc[top_idx, [
-        "Book",
-        "Author",
-        "Rating"
-    ]].rename(columns={
+    return book_df.loc[top_idx, ["Book", "Author", "Avg_Rating", "URL"]].rename(columns={
         "Book": "title",
         "Author": "author",
-        "Rating": "rating"
+        "Avg_Rating": "avg_rating",
+        "URL": "thumbnail"
     }).to_dict(orient="records")
+
+

@@ -52,7 +52,7 @@ function renderBooks(books) {
     const img = book.image_url || "images/default-book.jpg";
 
     article.innerHTML = `
-      <a class="image featured">
+      <a class="image featured ">
         <img src="${img}" alt="${book.title}">
       </a>
       <header>
