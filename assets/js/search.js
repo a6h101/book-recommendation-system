@@ -1,31 +1,37 @@
 async function handleSearch() {
-  console.log("Search clicked");
-
   const query = document.getElementById("searchInput").value.trim();
+  const carousel = document.getElementById("book-carousel");
 
   if (!query) {
     alert("Please enter a book name or genre");
     return;
   }
 
+  // Hide carousel before loading
+  carousel.classList.remove("show");
+
   try {
     const response = await fetch(
-      `http://127.0.0.1:8001/recommend?title=${encodeURIComponent(query)}`
+      `http://127.0.0.1:8000/recommend?title=${encodeURIComponent(query)}`
     );
 
-    if (!response.ok) {
-      throw new Error("API error");
-    }
+    if (!response.ok) throw new Error("API error");
 
     const data = await response.json();
     renderBooks(data);
 
-    document
-      .getElementById("book-carousel")
-      .scrollIntoView({ behavior: "smooth" });
+    // Force reflow so animation triggers
+    carousel.offsetHeight;
+    carousel.classList.add("show");
 
-  } catch (error) {
-    console.error(error);
+    // Smooth scroll (same style as Explore button)
+    $('html, body').animate(
+      { scrollTop: $('#book-carousel').offset().top - 100 },
+      1400
+    );
+
+  } catch (err) {
+    console.error(err);
     alert("Failed to fetch recommendations");
   }
 }
@@ -41,12 +47,13 @@ function renderBooks(books) {
 
   books.forEach(book => {
     const article = document.createElement("article");
+    article.classList.add("book-card");
 
-    const imageSrc = book.thumbnail || "images/default-book.jpg";
+    const img = book.image_url || "images/default-book.jpg";
 
     article.innerHTML = `
-      <a href="#" class="image featured">
-        <img src="${imageSrc}" alt="${book.title}" />
+      <a class="image featured">
+        <img src="${img}" alt="${book.title}">
       </a>
       <header>
         <h3>${book.title}</h3>
@@ -54,7 +61,6 @@ function renderBooks(books) {
       <p>
         <strong>Author:</strong> ${book.author}<br>
         <strong>Rating:</strong> ${book.rating ?? "N/A"}
-        <strong>Rating:</strong> ${book.avg_rating ?? "N/A"}
       </p>
     `;
 
