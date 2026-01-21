@@ -1,38 +1,38 @@
-from sklearn.feature_extraction.text import TfidfVectorizer
+import os
+import pickle
+import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
-class Recommender:
-    def __init__(self, df):
-        self.df = df
-        self.df["combined"] = (
-            df["title"] + " " +
-            df["authors"] + " " +
-            df["genres"] + " " +
-            df["description"]
-        )
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+ARTIFACTS_DIR = os.path.join(BASE_DIR, "ml", "artifacts")
 
-        self.vectorizer = TfidfVectorizer(stop_words="english")
-        self.tfidf_matrix = self.vectorizer.fit_transform(self.df["combined"])
-        self.similarity = cosine_similarity(self.tfidf_matrix)
+with open(os.path.join(ARTIFACTS_DIR, "books_df.pkl"), "rb") as f:
+    book_df = pickle.load(f)
 
-    def recommend_by_title(self, title, top_n=5):
-        if title not in self.df["title"].values:
+with open(os.path.join(ARTIFACTS_DIR, "tfidf_matrix.pkl"), "rb") as f:
+    tfidf_matrix = pickle.load(f)
+
+cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
+
+def normalize(text: str):
+    return text.lower().strip()
+
+book_df["book_norm"] = book_df["Book"].str.lower().str.strip()
+
+def recommend_books(title: str, top_n: int = 5):
+    title_norm = normalize(title)
+
+    exact_match = book_df[book_df["book_norm"] == title_norm]
+
+    if exact_match.empty:
+        matches = book_df[book_df["book_norm"].str.contains(title_norm, na=False)]
+        if matches.empty:
             return []
+        idx = matches.index[0]
+    else:
+        idx = exact_match.index[0]
 
-        idx = self.df[self.df["title"] == title].index[0]
-        scores = list(enumerate(self.similarity[idx]))
-        scores = sorted(scores, key=lambda x: x[1], reverse=True)
+    sim_scores = cosine_sim[idx]
+    top_idx = sim_scores.argsort()[-top_n-1:-1][::-1]
 
-        return self.df.iloc[[i[0] for i in scores[1:top_n+1]]][
-            ["title", "authors", "genres"]
-        ].to_dict(orient="records")
-
-    def recommend_by_genres(self, genres, top_n=5):
-        query = " ".join(genres)
-        query_vec = self.vectorizer.transform([query])
-        scores = cosine_similarity(query_vec, self.tfidf_matrix).flatten()
-
-        top_indices = scores.argsort()[::-1][:top_n]
-        return self.df.iloc[top_indices][
-            ["title", "authors", "genres"]
-        ].to_dict(orient="records")
+    return book_df.loc[top_idx, "Book"].tolist()

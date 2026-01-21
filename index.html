@@ -57,15 +57,16 @@
 								placeholder="Search by book name or genre..."
 								id="searchInput"
 							/>
-							<a href="#" onclick="handleSearch()">
+							<a href="#">
 								<i class="fas fa-search"></i>
 							</a>
 							</div>
 
-							<button type="button" onclick="handleSearch()" class="search-btn">
-  							<i class="fas fa-search"></i>
+							<button id="searchBtn" type="button" onclick="handleSearch()" class="scrolly">
+  								<i class="fas fa-search"></i>
 							</button>
 
+							<p id="statusText"></p>
 
 							<!-- Continue Button -->
 							<!-- <div class="banner-action">
