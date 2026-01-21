@@ -10,7 +10,7 @@ async function handleSearch() {
 
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/recommend?title=${encodeURIComponent(query)}`
+      `http://127.0.0.1:8001/recommend?title=${encodeURIComponent(query)}`
     );
 
     if (!response.ok) {
@@ -42,7 +42,7 @@ function renderBooks(books) {
   books.forEach(book => {
     const article = document.createElement("article");
 
-    const imageSrc = book.image_url || "images/default-book.jpg";
+    const imageSrc = book.thumbnail || "images/default-book.jpg";
 
     article.innerHTML = `
       <a href="#" class="image featured">
@@ -54,6 +54,7 @@ function renderBooks(books) {
       <p>
         <strong>Author:</strong> ${book.author}<br>
         <strong>Rating:</strong> ${book.rating ?? "N/A"}
+        <strong>Rating:</strong> ${book.avg_rating ?? "N/A"}
       </p>
     `;
 
