@@ -1,0 +1,186 @@
+.feature-card {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.feature-card .icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #444;
+}
+
+.feature-card h3 {
+  margin-bottom: 0.5rem;
+}
+
+.feature-card p {
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+#banner {
+  text-align: center;
+  padding: 6em 1em;
+}
+
+.banner-content h2 {
+  font-size: 2.5em;
+}
+
+.banner-subtext {
+  margin: 1em 0 2em;
+  margin-bottom: 1.5rem;
+  font-size: 1.1em;
+  opacity: 0.85;
+  margin-bottom: 1.5rem;
+}
+
+.search-box {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  background: #ffffff;
+  border-radius: 30px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.25);
+  width: fit-content;
+  margin: 0 auto;
+  margin-top: 1rem;
+  margin-bottom: 1.8rem;
+}
+
+.search-box input {
+  width: 0;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  font-weight: 500;
+  transition: 0.8s;
+  background: transparent;
+}
+
+.search-box:hover input,
+.search-box input:focus {
+  width: 320px;
+}
+
+.search-box a {
+  color: #000;
+  font-size: 18px;
+}
+
+.banner-action {
+  margin-top: 0.5rem;
+}
+
+.banner-action .button {
+  padding: 0.8em 2.2em;
+  font-size: 1rem;
+}
+
+#footer {
+  padding: 1.8em 0 1em 0;
+}
+
+#footer hr {
+  margin: 1em 0;
+}
+
+#footer .contact {
+  margin-bottom: 1em;
+}
+
+#footer .contact h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.6em;
+}
+
+#footer .contact p {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-bottom: 0.4em;
+}
+
+#footer .copyright {
+  margin-top: 0.8em;
+  padding-top: 0.6em;
+  font-size: 0.8rem;
+}
+
+#footer .copyright ul.menu li {
+  padding: 0;
+}
+
+#features {
+  text-align: center;
+  padding: 3em 0;
+}
+
+#features header {
+  margin-bottom: 2em;
+}
+
+#features .feature-card {
+  text-align: center;
+  padding: 2em 1.5em;
+}
+
+#features .feature-card .icon {
+  font-size: 3rem;
+  color: #e97b6c;
+  display: block;
+  margin-bottom: 0.8em;
+}
+
+#features h3 {
+  margin-bottom: 0.5em;
+}
+
+#features p {
+  font-size: 0.9rem;
+  max-width: 260px;
+  margin: 0 auto 1em auto;
+}
+
+#features .button {
+  margin-top: 0.5em;
+}
+.feature-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+#features .feature-card {
+  text-align: center !important;
+}
+
+#features .feature-card .icon {
+  display: inline-block !important;
+  font-size: 3rem;
+  margin-bottom: 0.7em;
+}
+
+#features .feature-card p {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  max-width: 260px;
+}
+
+#features .feature-card h3 {
+  text-align: center !important;
+}
+
+.search-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.search-btn i {
+  font-size: 1.2rem;
+  color: #444;
+}
