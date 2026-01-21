@@ -6,7 +6,4 @@ DB_HOST = "localhost"
 DB_PORT = "3306"
 DB_NAME = "books_db"
 
-DATABASE_URL = (
-    f"mysql+mysqlconnector://{DB_USER}:{DB_PASSWORD}"
-    f"@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-)
+DATABASE_URL = "mysql+mysqlconnector://root:@localhost:3306/books_db"

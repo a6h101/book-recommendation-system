@@ -35,4 +35,12 @@ def recommend_books(title: str, top_n: int = 5):
     sim_scores = cosine_sim[idx]
     top_idx = sim_scores.argsort()[-top_n-1:-1][::-1]
 
-    return book_df.loc[top_idx, "Book"].tolist()
+    return book_df.loc[top_idx, [
+        "Book",
+        "Author",
+        "Rating"
+    ]].rename(columns={
+        "Book": "title",
+        "Author": "author",
+        "Rating": "rating"
+    }).to_dict(orient="records")
