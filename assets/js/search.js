@@ -12,7 +12,7 @@ async function handleSearch() {
 
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/recommend?title=${encodeURIComponent(query)}`
+      `http://127.0.0.1:8001/recommend?title=${encodeURIComponent(query)}`
     );
 
     if (!response.ok) throw new Error("API error");
@@ -49,19 +49,20 @@ function renderBooks(books) {
     const article = document.createElement("article");
     article.classList.add("book-card");
 
-    const img = book.image_url || "images/default-book.jpg";
-
     article.innerHTML = `
-      <a class="image featured ">
-        <img src="${img}" alt="${book.title}">
+      <a href="${book.url}" target="_blank" rel="noopener noreferrer" class="book-link">
+      <div class="book-image">
+        <img src="${book.thumbnail}" alt="${book.title}"/>
+      </div>
+        <header>
+          <h3>${book.title}</h3>
+        </header>
+
+        <p>
+          <strong>Author:</strong> ${book.author}<br>
+          <strong>Rating:</strong> ${book.avg_rating ?? "N/A"}
+        </p>
       </a>
-      <header>
-        <h3>${book.title}</h3>
-      </header>
-      <p>
-        <strong>Author:</strong> ${book.author}<br>
-        <strong>Rating:</strong> ${book.rating ?? "N/A"}
-      </p>
     `;
 
     reel.appendChild(article);
