@@ -22,30 +22,19 @@ def normalize(text: str):
 book_df["book_norm"] = book_df["Book"].str.lower().str.strip()
 
 def recommend_books(title: str, top_n: int = 5):
-    title = title.lower().strip()
+    title_norm = normalize(title)
 
-    matches = book_df[book_df["Book"].str.lower().str.contains(title, na=False)]
+    exact_match = book_df[book_df["book_norm"] == title_norm]
 
-    if matches.empty:
-        return []
+    if exact_match.empty:
+        matches = book_df[book_df["book_norm"].str.contains(title_norm, na=False)]
+        if matches.empty:
+            return []
+        idx = matches.index[0]
+    else:
+        idx = exact_match.index[0]
 
-    idx = matches.index[0]
+    sim_scores = cosine_sim[idx]
+    top_idx = sim_scores.argsort()[-top_n-1:-1][::-1]
 
-    sim_scores = list(enumerate(cosine_sim[idx]))
-    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-
-    recommendations = []
-
-    for i, score in sim_scores[1: top_n+1]:
-        book = book_df.iloc[i]
-
-        recommendations.append({
-            "title": book.get("Book", ""),
-            "author": book.get("Author", ""),
-            "avg_rating": book.get("Avg_Rating", 0),
-            "thumbnail": book.get("URL", "")
-        })
-
-    return recommendations
-
-
+    return book_df.loc[top_idx, "Book"].tolist()
