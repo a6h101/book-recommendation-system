@@ -22,26 +22,30 @@ def normalize(text: str):
 book_df["book_norm"] = book_df["Book"].str.lower().str.strip()
 
 def recommend_books(title: str, top_n: int = 5):
-    title_norm = normalize(title)
+    title = title.lower().strip()
 
-    exact_match = book_df[book_df["book_norm"] == title_norm]
+    matches = book_df[book_df["Book"].str.lower().str.contains(title, na=False)]
 
-    if exact_match.empty:
-        matches = book_df[book_df["book_norm"].str.contains(title_norm, na=False)]
-        if matches.empty:
-            return []
-        idx = matches.index[0]
-    else:
-        idx = exact_match.index[0]
+    if matches.empty:
+        return []
 
-    sim_scores = cosine_sim[idx]
-    top_idx = sim_scores.argsort()[-top_n-1:-1][::-1]
+    idx = matches.index[0]
 
-    return book_df.loc[top_idx, ["Book", "Author", "Avg_Rating", "URL"]].rename(columns={
-        "Book": "title",
-        "Author": "author",
-        "Avg_Rating": "avg_rating",
-        "URL": "thumbnail"
-    }).to_dict(orient="records")
+    sim_scores = list(enumerate(cosine_sim[idx]))
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+
+    recommendations = []
+
+    for i, score in sim_scores[1: top_n+1]:
+        book = book_df.iloc[i]
+
+        recommendations.append({
+            "title": book.get("Book", ""),
+            "author": book.get("Author", ""),
+            "avg_rating": book.get("Avg_Rating", 0),
+            "thumbnail": book.get("URL", "")
+        })
+
+    return recommendations
 
 

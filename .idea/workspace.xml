@@ -4,11 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3a4a0c91-4f17-4505-b62a-8a6468245864" name="Changes" comment="" />
+    <list default="true" id="3a4a0c91-4f17-4505-b62a-8a6468245864" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/recommender.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/recommender.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ml/artifacts/books_df.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/ml/artifacts/books_df.pkl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ml/artifacts/tfidf_matrix.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/ml/artifacts/tfidf_matrix.pkl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ml/artifacts/tfidf_vectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/ml/artifacts/tfidf_vectorizer.pkl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ml/cleaned_data/books_cleaned.csv" beforeDir="false" afterPath="$PROJECT_DIR$/ml/cleaned_data/books_cleaned.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ml/notebooks/01_data_cleaning.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/ml/notebooks/01_data_cleaning.ipynb" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FlaskConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform)); sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo, NoAppException&#10;for module in [&quot;main.py&quot;, &quot;wsgi.py&quot;, &quot;app.py&quot;]:&#10;    try: locals().update(ScriptInfo(app_import_path=module, create_app=None).load_app().make_shell_context()); print(&quot;\nFlask App: %s&quot; % app.import_name); break&#10;    except NoAppException: pass">
+    <envs>
+      <env key="FLASK_APP" value="app" />
+    </envs>
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform)); sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo, NoAppException&#10;for module in [&quot;main.py&quot;, &quot;wsgi.py&quot;, &quot;app.py&quot;]:&#10;    try: locals().update(ScriptInfo(app_import_path=module, create_app=None).load_app().make_shell_context()); print(&quot;\nFlask App: %s&quot; % app.import_name); break&#10;    except NoAppException: pass" />
+    <option name="myEnvs">
+      <map>
+        <entry key="FLASK_APP" value="app" />
+      </map>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -41,6 +60,8 @@
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -48,7 +69,6 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-PY-253.29346.142" />
         <option value="bundled-python-sdk-f2b7a9f6281b-6e1f45a539f7-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.29346.142" />
       </set>
     </attachedChunks>
@@ -61,6 +81,8 @@
       <option name="presentableId" value="Default" />
       <updated>1769019865543</updated>
       <workItem from="1769019867044" duration="1608000" />
+      <workItem from="1769062310204" duration="1073000" />
+      <workItem from="1774438783097" duration="170000" />
     </task>
     <servers />
   </component>
