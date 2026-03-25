@@ -35,7 +35,7 @@ def make_thumbnail(title: str):
     except Exception as e:
         print("Google Books error:", e)
 
-    return "images/default-book.jpg"
+    return "images/header.jpg"
 
 
 @router.get("/recommend")
