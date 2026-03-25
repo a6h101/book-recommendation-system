@@ -51,8 +51,8 @@ function renderBooks(books) {
 
     article.innerHTML = `
       <a href="${book.url}" target="_blank" rel="noopener noreferrer" class="book-link">
-      <div class="book-image">
-        <img src="${book.thumbnail}" alt="${book.title}"/>
+      <div>
+        <img class="book-image" src="${book.thumbnail}" alt="${book.title}"/>
       </div>
         <header>
           <h3>${book.title}</h3>
